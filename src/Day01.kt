@@ -1,17 +1,40 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        var max=0
+        var suma=0
+        input.forEach{
+            if (it!="")
+                suma+=it.toInt()
+            else {
+                if (suma > max)
+                    max = suma
+                suma = 0
+            }
+        }
+        return max
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        var maxThree = arrayListOf<Int>(0, 0, 0)
+        var suma = 0
+        input.forEach {
+            if (it != "") {
+                suma =suma+ it.toInt()
+            }
+            else {
+                if (maxThree.any{it<suma} ){
+                    maxThree.add(suma)
+                    maxThree.sortDescending()
+                    maxThree.removeLast()
+
+                }
+            suma=0
+            }
+        }
+        return maxThree.sum()
     }
+    val testInput = readInput("input1")
+    println(part1(testInput))
+    println(part2(testInput))
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
 }
